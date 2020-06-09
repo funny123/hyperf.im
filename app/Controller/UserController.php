@@ -7,11 +7,18 @@ namespace App\Controller;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 
+use Hyperf\HttpServer\Annotation\AutoController;
+use Hyperf\View\RenderInterface;
+
 class UserController
 {
-    public function index(RequestInterface $request, ResponseInterface $response)
+    public function index(RequestInterface $request,ResponseInterface $response,RenderInterface $render)
     {
-        return $response->raw('index!');
+        // return $response->raw('index!');
+        // 存在则返回，不存在则返回 null
+        $name = $request->all();
+        return $response->json($name);
+        return $render->render('index', ['name' => $name]);
     }
 
     public function store(RequestInterface $request, ResponseInterface $response)
